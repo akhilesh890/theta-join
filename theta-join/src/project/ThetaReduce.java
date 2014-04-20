@@ -11,12 +11,6 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.Reducer.Context;
 
-/**
- * 
- * @author aswinakhilesh
-	Input to the reduce function is key, and list of values. Each value is of the form : impression,clicks,conversions 
- */
-
 public class ThetaReduce extends Reducer<Text, Text, Text, Text> {
 	ArrayList<String> tupleR = new ArrayList<String>();
 	ArrayList<String> tupleS = new ArrayList<String>();
@@ -31,15 +25,19 @@ public class ThetaReduce extends Reducer<Text, Text, Text, Text> {
 			String clicks = arr[3];
 			String query = arr[4];
 			if (arr[0] == "R"){
-				
+				tupleR.add(val.toString());
 			}
 			if (arr[1] == "S"){
-				
-			}
-		}       
-		String result = impressions_count + "," + clicks_count + "," + conversions_count; 
-		output.set(result);
+				tupleS.add(val.toString());
+		}
+		
+			
+		//TODO Implement the Join function. For each tuple pair, check the conditions and execute the Join.	
+		
+		//String result = impressions_count + "," + clicks_count + "," + conversions_count; 
+//		output.set(result);
 		context.write(key, output);
 	}
+}
 }
 
