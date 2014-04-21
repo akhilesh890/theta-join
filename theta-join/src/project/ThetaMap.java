@@ -26,6 +26,8 @@ public class ThetaMap extends Mapper<LongWritable, Text, Text, Text> {
 		
 		//TODO Matrix Mapping logic comes here. Set keyRow and keyCol.
 
+		
+		
 // Row entries come here		
 		
 		output = "A" + "," + ymdh.toString() + "," + userid.toString() + "," + clicks.toString() + "," + query.toString(); 

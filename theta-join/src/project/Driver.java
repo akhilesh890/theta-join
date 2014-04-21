@@ -40,7 +40,7 @@ public class Driver {
 		job.setMapperClass(ThetaMap.class);
 		job.setCombinerClass(ThetaReduce.class);
 		job.setReducerClass(ThetaReduce.class);
-	
+		job.setNumReduceTasks(676);
 		job.setInputFormatClass(TextInputFormat.class);
 		job.setOutputFormatClass(TextOutputFormat.class);
 		
