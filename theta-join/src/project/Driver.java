@@ -28,19 +28,18 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.Progressable;
 
 public class Driver {
-
+	
 	public static void main(String[] args) throws Exception {
 
-		// 1] Calculate out N, or the number of lines in the document by Map Reduce. Store it in "line_output".
 		Configuration conf1 = new Configuration();
 		Job job = new Job(conf1, "Document Count");
 		job.setJarByClass(Driver.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(Text.class); 
 		job.setMapperClass(ThetaMap.class);
-		job.setCombinerClass(ThetaReduce.class);
+		//job.setCombinerClass(ThetaReduce.class);
 		job.setReducerClass(ThetaReduce.class);
-		job.setNumReduceTasks(676);
+		job.setNumReduceTasks(100);
 		job.setInputFormatClass(TextInputFormat.class);
 		job.setOutputFormatClass(TextOutputFormat.class);
 		
