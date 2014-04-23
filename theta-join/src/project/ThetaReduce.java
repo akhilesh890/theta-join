@@ -23,17 +23,16 @@ public class ThetaReduce extends Reducer<Text, Text, Text, Text> {
 	public long parseDate(String str){
 		StringTokenizer st = new StringTokenizer(str," -:");
 		GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(st.nextToken()),
-		Integer.parseInt(st.nextToken()),
-		Integer.parseInt(st.nextToken()),
-		Integer.parseInt(st.nextToken()),
-		Integer.parseInt(st.nextToken()),
-		Integer.parseInt(st.nextToken()));		
+				Integer.parseInt(st.nextToken()),
+				Integer.parseInt(st.nextToken()),
+				Integer.parseInt(st.nextToken()),
+				Integer.parseInt(st.nextToken()),
+				Integer.parseInt(st.nextToken()));		
 		return gc.getTimeInMillis();
-		}
-	
+	}
+
 	public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
 		String outputString = "";
-		System.out.println("key " + key );
 		tupleA.clear();
 		tupleB.clear();
 		for (Text val : values) {
@@ -48,14 +47,6 @@ public class ThetaReduce extends Reducer<Text, Text, Text, Text> {
 			}
 		}
 
-//		for (String aa : tupleA){
-//			System.out.println(key +"TupleA "+ aa);
-//		}
-//		for (String bb : tupleB){
-//			System.out.println(key +"TupleB "+ bb);			
-//		}
-
-
 		for (int i = 0 ; i < tupleA.size() ; i++){
 			String a = tupleA.get(i);
 			String arrayA[] = a.toString().split("\\|");	
@@ -63,7 +54,6 @@ public class ThetaReduce extends Reducer<Text, Text, Text, Text> {
 			String useridA = arrayA[2];
 			String clicksA = arrayA[3];
 			String queryA = arrayA[4];
-//			System.out.println(key + "INSIDE A" + " , " + secondsA + " , " + useridA.toString() + " , " + clicksA.toString() + " , " + queryA.toString()); 
 			for(int j = 0 ; j < tupleB.size() ; j++){
 				String b = tupleB.get(j);
 				String arrayB[] = b.toString().split("\\|"); 
@@ -71,26 +61,17 @@ public class ThetaReduce extends Reducer<Text, Text, Text, Text> {
 				String useridB = arrayB[2];
 				String clicksB = arrayB[3];				
 				String queryB = arrayB[4];
-			
-//									
-//			System.out.println(key + "INSIDE B" + " , " + secondsB + " , " + useridB.toString() + " , " + clicksB.toString() + " , " + queryB.toString()); 
-//
-//				System.out.println(secondsA + " " + secondsB);
 
 				if (useridA.equals(useridB) == false && clicksA.equals("1") && clicksB.equals("1") && Math.abs(parseDate(ymdhA) - parseDate(ymdhB)) < 2000){
-//					System.out.println("Am heeee");
-					outputString += ymdhA + " , " + queryA + " , " + queryB + "\n";
-//					System.out.print(outputString);
+					outputString = ymdhA + " , " + queryA + " , " + queryB;
+					output.set(outputString);
+					key.clear();
+					context.write(key, output);
 				}
 
 			}
 
 		}
-		//System.out.print(outputString);
-		output.set(outputString);
-//		System.out.print(output.toString());
-		key.clear();
-		context.write(key, output);
 	}
 }
 

@@ -28,7 +28,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.Progressable;
 
 public class Driver {
-	
+
 	public static void main(String[] args) throws Exception {
 
 		Configuration conf1 = new Configuration();
@@ -39,10 +39,10 @@ public class Driver {
 		job.setMapperClass(ThetaMap.class);
 		//job.setCombinerClass(ThetaReduce.class);
 		job.setReducerClass(ThetaReduce.class);
-		job.setNumReduceTasks(100);
+		job.setNumReduceTasks(676);
 		job.setInputFormatClass(TextInputFormat.class);
 		job.setOutputFormatClass(TextOutputFormat.class);
-		
+
 		FileInputFormat.addInputPath(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));        
 		job.waitForCompletion(true);
